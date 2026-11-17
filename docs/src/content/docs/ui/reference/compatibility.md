@@ -45,6 +45,7 @@ profile's rule decides which of the two a new feature is. [Modifiers](/ui/compon
 | `offersStateProvider`, `offersIconProvider`, `stateProviderBlockId`, `iconProviderBlockId` on `actions-list-editor`, and the `provide` config event | Properties and an event name | Ignores the properties, never sends `provide`, and shows the action list without provider controls. |
 | `status` (`UiStatus`), `menu` (`UiConfigMenu`) and `dialog` (`UiConfigDialog`) | Configuration types | Declines them and draws the node's `fallback`. |
 | `confirmTitle`, `confirmMessage`, `confirmLabel`, `confirmDanger`, `promptValue` on `button` | Properties | Raises `activate` at once, without asking and without a payload. |
+| `origin` on `ui.slider` | A property | Ignores it and fills from the start of the track; the level and the events are unchanged. |
 | `interaction` on `ui.slider` (`relative`) | A property | Ignores it and keeps the absolute drag: a press jumps the level to the pointer, and a tap sends `change`. |
 | `ui.modifier` (padding, opacity, clip, mask, frame), component version 1 | A type | Draws the node's explicit `fallback`; without one, none of the wrapped content (Macro Deck's renderer shows a faint placeholder box). No fallback is invented for you. |
 | `trackColor` on `ui.gauge` | A property | Ignores it and draws the theme's track colour, so the ring still reads. |

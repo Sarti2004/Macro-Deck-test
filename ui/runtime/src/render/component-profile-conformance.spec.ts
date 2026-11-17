@@ -64,7 +64,7 @@ const ASSERTED_KEYS = new Set([
   'size', 'mainSize', 'mainSizeOverFontSize', 'align', 'digits', 'tabular',
   'direction', 'thickness', 'trackLength', 'trackThickness', 'cornerRadius', 'fillLength', 'fillColor',
   'interactive', 'interactiveWidth', 'interactiveHeight', 'thumbRadius', 'thumbRingWidth', 'thumbCentre',
-  'fillPainted', 'fillFrom', 'fillLengthAtAnchor', 'fillLengthAt30s',
+  'fillPainted', 'fillFrom', 'fillOrigin', 'fillLengthAtAnchor', 'fillLengthAt30s',
   'fillStart', 'fillEnd', 'marker',
   'background', 'backdropFit', 'backdropWidth', 'backdropOffsetX',
   'backdropOpacity', 'ringStyle', 'ringColor', 'ringWidth', 'pressMinVisibleMs',
@@ -441,6 +441,8 @@ describe('component-profile conformance fixtures: slider tree', () => {
           const fillFraction = num(vertical ? fill.style.height : fill.style.width) / 100;
           expect(fillFraction * trackLength).withContext(`${id}.fillLength`)
             .toBeCloseTo(spec.fillLength as number, 2);
+          const fillOrigin = num(vertical ? fill.style.bottom : fill.style.left) / 100 * trackLength;
+          expect(fillOrigin).withContext(`${id}.fillOrigin`).toBeCloseTo((spec.fillOrigin as number) ?? 0, 2);
 
           if ('fillColor' in spec) {
             if (spec.fillColor === 'reader-accent') {

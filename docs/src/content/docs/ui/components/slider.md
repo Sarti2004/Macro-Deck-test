@@ -66,6 +66,19 @@ Direction = UiComponentDirections.Vertical,
 `Direction` is the axis the level travels along, not the element's axis in its parent. Vertical runs
 bottom to top - up is more.
 
+## Filling from the centre
+
+```csharp
+Origin = 0.5,
+```
+
+`Origin` is the level the filled span grows from. At `0.5` the fill runs from the middle of the track to
+the level, to the right or left of it on a horizontal slider and up or down on a vertical one, as on a pan
+or balance control. It changes only the paint: the level, `step` and both events keep the same `0..1`
+meaning, so a pan of `-1..1` is `level * 2 - 1` in your own units.
+
+A reader that predates `origin` ignores it and fills from the start of the track.
+
 ## Relative drag
 
 ```csharp
@@ -97,6 +110,7 @@ A reader without `ui.slider` draws the fallback, here the same level as a read-o
 | `Level` (`level`) | `0..1` | `0` | The filled fraction of the track. |
 | `Step` (`step`) | fraction of the track | Continuous | The granularity the level snaps to. |
 | `LevelColor` (`levelColor`) | `#rrggbb` | The reader's own accent colour | The filled span's colour. |
+| `Origin` (`origin`) | `0..1` | `0`, the start of the track | The level the filled span grows from - see [Filling from the centre](#filling-from-the-centre). |
 | `Direction` (`direction`) | `horizontal`, `vertical` | `horizontal` - unlike `ui.stack` | The axis the level travels along. |
 | `Interaction` (`interaction`) | `relative` | Absolute: the level jumps to the pointer | How a pointer maps to the level - see [Relative drag](#relative-drag). An unknown value reads as absent. |
 | `Thickness` (`thickness`) | length | Left to the reader | The drawn track's thickness on the cross axis. |

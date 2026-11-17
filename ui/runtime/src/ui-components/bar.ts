@@ -61,6 +61,10 @@ export function sliderLevel(node: UiNode): number {
   return clampUnit(nodeNumber(node, UiComponentProperties.Level) ?? 0);
 }
 
+export function sliderOrigin(node: UiNode): number {
+  return clampUnit(nodeNumber(node, UiComponentProperties.Origin) ?? 0);
+}
+
 export function sliderLevelColor(node: UiNode): string {
   return nodeHexColor(node, UiComponentProperties.LevelColor) ?? 'var(--color-accent)';
 }

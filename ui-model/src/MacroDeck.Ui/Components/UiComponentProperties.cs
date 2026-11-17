@@ -192,6 +192,11 @@ public static class UiComponentProperties
 	/// colour.</summary>
 	public const string LevelColor = "levelColor";
 
+	/// <summary>The level a slider's filled span grows from, in the same fraction space as
+	/// <see cref="Level" />. Absent means <c>0</c>, the track's start; <c>0.5</c> makes a centred control
+	/// such as a pan. A reader that does not implement the key fills from the start.</summary>
+	public const string Origin = "origin";
+
 	/// <summary>A gauge's unfilled track colour, as <c>#rrggbb</c>. Absent means the reader's tertiary
 	/// surface colour, which is also what a reader that does not implement the key draws.</summary>
 	public const string TrackColor = "trackColor";
@@ -340,7 +345,7 @@ public static class UiComponentProperties
 		Events, MainSize, Fill, Direction, Justify, Align, Gap, Padding, Background, Text, Size, MinSize,
 		Weight, Role, Color, MaxLines, Wrap, FontFace, Source, Transition, Fit, Zoom, OffsetX, OffsetY,
 		Opacity, Brightness, Saturation, Tint, Start, End, StartColor, EndColor, Marker, Thickness, Value,
-		Format, Seconds, Level, Step, LevelColor, Interaction, BorderStyle, BorderColor, Corner, Points, PlotTop,
+		Format, Seconds, Level, Step, LevelColor, Origin, Interaction, BorderStyle, BorderColor, Corner, Points, PlotTop,
 		Digits, Answer, Placeholder, Rotation, OriginX, OriginY, Shape, CornerRadius, StrokeColor,
 		StrokeWidth, Path, Icon, Columns, Rows, MinCellSize, ColumnSpan, RowSpan, StartAngle, EndAngle, On, Selected,
 		Modifiers, Frame, Clip, Mask, Variants, Spans, Overflow, Anchor, Stream, Shadow,

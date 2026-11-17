@@ -480,6 +480,7 @@ export {
   sliderIsVertical,
   sliderLevel,
   sliderLevelColor,
+  sliderOrigin,
   sliderLevelFromPointer,
   sliderThumbDiameterPx,
   sliderThumbOffsetPx,

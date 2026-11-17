@@ -9,6 +9,7 @@ import {
   sliderLevel,
   sliderLevelColor,
   sliderLevelFromPointer,
+  sliderOrigin,
   sliderThumbDiameterPx,
   sliderThumbOffsetPx,
   sliderThumbStrokePx,
@@ -87,7 +88,10 @@ function paintSliderLevel(node: UiNode, ctx: UiComponentContext<UiSliderState>):
   // The parts outlive an orientation change - the renderer rebuilds a node's DOM only when its type
   // changes - so the axis just left behind is cleared, or the stale inline value keeps beating the
   // stylesheet that would otherwise span the fill across the track and centre the thumb on it.
-  ctx.setStyle(fill, vertical ? 'height' : 'width', `${level * 100}%`);
+  const origin = sliderOrigin(node);
+  ctx.setStyle(fill, vertical ? 'bottom' : 'left', `${Math.min(origin, level) * 100}%`);
+  ctx.setStyle(fill, vertical ? 'left' : 'bottom', null);
+  ctx.setStyle(fill, vertical ? 'height' : 'width', `${Math.abs(level - origin) * 100}%`);
   ctx.setStyle(fill, vertical ? 'width' : 'height', null);
   ctx.setStyle(thumb, vertical ? 'bottom' : 'left', px(sliderThumbOffsetPx(level, extent, thickness)));
   ctx.setStyle(thumb, vertical ? 'left' : 'bottom', null);

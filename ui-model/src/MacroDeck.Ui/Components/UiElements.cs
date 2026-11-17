@@ -783,11 +783,11 @@ public sealed record UiVideoStream : UiComponentLeaf
 /// <item>The track spans the element's full extent along <see cref="Direction" />, is
 /// <see cref="Thickness" /> across, is centred on the cross axis, and has fully rounded ends.</item>
 /// <item>The unfilled track is painted in the reader's tertiary surface colour.</item>
-/// <item>The filled span runs from the track's start to <see cref="Level" /> of its length, painted flat
-/// in <see cref="LevelColor" />, or in the reader's <b>accent</b> colour when that is absent. It carries
-/// the track's own fully rounded ends, so a span short of the end still reads as a pill rather than a
-/// cut-off block. A <see cref="Level" /> of <c>0</c> paints nothing - not a rounded stub one radius
-/// wide.</item>
+/// <item>The filled span runs from <see cref="Origin" /> to <see cref="Level" /> of the track's length, in
+/// whichever order they fall, painted flat in <see cref="LevelColor" />, or in the reader's <b>accent</b>
+/// colour when that is absent. It carries the track's own fully rounded ends, so a span short of the end
+/// still reads as a pill rather than a cut-off block. A <see cref="Level" /> equal to the origin paints
+/// nothing - not a rounded stub one radius wide.</item>
 /// <item>A <b>thumb</b> is drawn at <see cref="Level" />, and it is what makes the element read as
 /// something to take hold of rather than a bar that happens to move. It is a filled disc of radius
 /// <c>1.25 * Thickness</c> in the reader's primary text colour - not in <see cref="LevelColor" />,
@@ -855,6 +855,11 @@ public sealed record UiSlider : UiComponentLeaf
 	/// it through to its styling layer.</summary>
 	public UiValue<string> LevelColor { get; init; }
 
+	/// <summary>The level the filled span grows from, in <c>0..1</c>: <c>0.5</c> fills outward from the
+	/// centre, as a pan control does. It changes only the paint, never the level or the events. Absent
+	/// means <c>0</c>, the track's start. A reader that predates the key fills from the start.</summary>
+	public UiValue<double> Origin { get; init; }
+
 	/// <summary>The axis the level travels along - see <see cref="UiComponentDirections" />. Absent means
 	/// <see cref="UiComponentDirections.Horizontal" />.</summary>
 	public UiValue<string> Direction { get; init; }
@@ -880,6 +885,7 @@ public sealed record UiSlider : UiComponentLeaf
 		properties.Set(UiComponentProperties.Level, Level);
 		properties.Set(UiComponentProperties.Step, Step);
 		properties.Set(UiComponentProperties.LevelColor, LevelColor);
+		properties.Set(UiComponentProperties.Origin, Origin);
 		properties.Set(UiComponentProperties.Direction, Direction);
 		properties.Set(UiComponentProperties.Interaction, Interaction);
 		properties.Set(UiComponentProperties.Thickness, Thickness.Value);

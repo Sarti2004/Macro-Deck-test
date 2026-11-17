@@ -272,6 +272,8 @@ allowed to *offer*, which no other fixture exercises:
 - both axes, including the `vertical` one, whose fill runs bottom to top;
 - `interaction` of `relative` on one slider and **absent** on the others - absent is absolute, and a
   reader that spelled the default into the tree would pass a fixture containing only the first;
+- `origin` of `0.5` on the read-only slider and **absent** on the others - absent fills from the start,
+  and the one with an origin fills only the span between the centre and its level;
 - a `level` of exactly `0`, which is where a reader tends to paint a rounded stub one radius wide instead
   of nothing;
 - a one-step fallback to `ui.range-bar` carrying **both** colours - a reader too old to draw the

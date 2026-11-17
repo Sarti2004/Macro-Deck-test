@@ -614,7 +614,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  transition: width 80ms linear;
+  transition: left 80ms linear, width 80ms linear;
 }
 
 .widget-slider-vertical .widget-slider-fill {
@@ -622,7 +622,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  transition: height 80ms linear;
+  transition: bottom 80ms linear, height 80ms linear;
 }
 
 .widget-slider-thumb {

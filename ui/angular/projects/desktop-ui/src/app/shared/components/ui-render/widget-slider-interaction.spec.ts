@@ -450,6 +450,58 @@ describe('ui.slider interaction', () => {
     expect(fillOf(rendered).style.width).toBe('0%');
   });
 
+  describe('origin', () => {
+    function trackOf(rendered: RenderedTree): DOMRect {
+      return (el(rendered).querySelector('.widget-slider-track') as HTMLElement).getBoundingClientRect();
+    }
+
+    it('fills a horizontal slider from the centre towards the level on either side of it', async () => {
+      const left = await renderTree(sliderNode({ [Props.Origin]: 0.5, [Props.Level]: 0.2 }), withBasis(200));
+      const leftTrack = trackOf(left);
+      const leftFill = fillOf(left).getBoundingClientRect();
+      expect(leftFill.left - leftTrack.left).toBeCloseTo(0.2 * leftTrack.width, 0);
+      expect(leftFill.right - leftTrack.left).toBeCloseTo(0.5 * leftTrack.width, 0);
+
+      const right = await renderTree(sliderNode({ [Props.Origin]: 0.5, [Props.Level]: 0.8 }), withBasis(200));
+      const rightTrack = trackOf(right);
+      const rightFill = fillOf(right).getBoundingClientRect();
+      expect(rightFill.left - rightTrack.left).toBeCloseTo(0.5 * rightTrack.width, 0);
+      expect(rightFill.right - rightTrack.left).toBeCloseTo(0.8 * rightTrack.width, 0);
+    });
+
+    it('fills a vertical slider from the centre up to a level above it and down to one below it', async () => {
+      const above = await renderTree(
+        sliderNode({ [Props.Direction]: 'vertical', [Props.Origin]: 0.5, [Props.Level]: 0.9 }),
+        withBasis(200),
+      );
+      const aboveTrack = trackOf(above);
+      const aboveFill = fillOf(above).getBoundingClientRect();
+      expect(aboveTrack.bottom - aboveFill.bottom).toBeCloseTo(0.5 * aboveTrack.height, 0);
+      expect(aboveTrack.bottom - aboveFill.top).toBeCloseTo(0.9 * aboveTrack.height, 0);
+
+      const below = await renderTree(
+        sliderNode({ [Props.Direction]: 'vertical', [Props.Origin]: 0.5, [Props.Level]: 0.25 }),
+        withBasis(200),
+      );
+      const belowTrack = trackOf(below);
+      const belowFill = fillOf(below).getBoundingClientRect();
+      expect(belowTrack.bottom - belowFill.bottom).toBeCloseTo(0.25 * belowTrack.height, 0);
+      expect(belowTrack.bottom - belowFill.top).toBeCloseTo(0.5 * belowTrack.height, 0);
+    });
+
+    it('paints nothing at the origin, and still sends the level the pointer is at', async () => {
+      const rendered = await renderTree(sliderNode({ [Props.Origin]: 0.5, [Props.Level]: 0.5 }), withBasis(200));
+      expect(fillOf(rendered).getBoundingClientRect().width).toBeCloseTo(0, 1);
+
+      const surface = surfaceOf(rendered);
+      const rect = surface.getBoundingClientRect();
+      down(surface, rect.left + 0.25 * rect.width, rect.top + rect.height / 2);
+      await tick(rendered);
+
+      expect(rendered.events[0].data as number).toBeCloseTo(0.25, 5);
+    });
+  });
+
   describe('relative interaction', () => {
     function relativeNode(overrides: Record<string, unknown> = {}, events: string[] = ['adjust', 'change']): UiNode {
       return sliderNode({ [Props.Interaction]: 'relative', ...overrides }, events);
